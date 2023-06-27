@@ -1,131 +1,108 @@
-// Program.cs
-
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
-
-namespace MicroserviceExample
+public interface IUserService
 {
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().Run();
-        }
-
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
-    }
+    User GetUser(int userId);
+    List<User> GetUsers();
+    void CreateUser(User user);
+    void UpdateUser(User user);
+    void DeleteUser(int userId);
 }
 
-// Startup.cs
-
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-
-namespace MicroserviceExample
+public class UserService : IUserService
 {
-    public class Startup
+    public User GetUser(int userId)
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+        // Kullanıcıyı veritabanından almak için gerekli işlemler
+    }
 
-        public IConfiguration Configuration { get; }
+    public List<User> GetUsers()
+    {
+        // Tüm kullanıcıları veritabanından almak için gerekli işlemler
+    }
 
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddControllers();
+    public void CreateUser(User user)
+    {
+        // Kullanıcıyı veritabanına kaydetmek için gerekli işlemler
+    }
 
-            // Dependency Injection configurations
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IProductService, ProductService>();
-            services.AddScoped<IOrderService, OrderService>();
-        }
+    public void UpdateUser(User user)
+    {
+        // Kullanıcıyı güncellemek için gerekli işlemler
+    }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
-            app.UseRouting();
-
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-        }
+    public void DeleteUser(int userId)
+    {
+        // Kullanıcıyı silmek için gerekli işlemler
     }
 }
-
-// Controllers/UsersController.cs
-
-using Microsoft.AspNetCore.Mvc;
-
-namespace MicroserviceExample.Controllers
+public interface IProductService
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class UsersController : ControllerBase
+    Product GetProduct(int productId);
+    List<Product> GetProducts();
+    void CreateProduct(Product product);
+    void UpdateProduct(Product product);
+    void DeleteProduct(int productId);
+}
+
+public class ProductService : IProductService
+{
+    public Product GetProduct(int productId)
     {
-        private readonly IUserService _userService;
+        // Ürünü veritabanından almak için gerekli işlemler
+    }
 
-        public UsersController(IUserService userService)
-        {
-            _userService = userService;
-        }
+    public List<Product> GetProducts()
+    {
+        // Tüm ürünleri veritabanından almak için gerekli işlemler
+    }
 
-        // UserController actions
+    public void CreateProduct(Product product)
+    {
+        // Ürünü veritabanına kaydetmek için gerekli işlemler
+    }
+
+    public void UpdateProduct(Product product)
+    {
+        // Ürünü güncellemek için gerekli işlemler
+    }
+
+    public void DeleteProduct(int productId)
+    {
+        // Ürünü silmek için gerekli işlemler
     }
 }
-// Controllers/ProductsController.cs
-
-using Microsoft.AspNetCore.Mvc;
-
-namespace MicroserviceExample.Controllers
+public interface IOrderService
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ProductsController : ControllerBase
-    {
-        private readonly IProductService _productService;
-
-        public ProductsController(IProductService productService)
-        {
-            _productService = productService;
-        }
-
-        // ProductController actions
-    }
+    Order GetOrder(int orderId);
+    List<Order> GetOrders();
+    void CreateOrder(Order order);
+    void UpdateOrder(Order order);
+    void DeleteOrder(int orderId);
 }
-// Controllers/OrdersController.cs
 
-using Microsoft.AspNetCore.Mvc;
-
-namespace MicroserviceExample.Controllers
+public class OrderService : IOrderService
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class OrdersController : ControllerBase
+    public Order GetOrder(int orderId)
     {
-        private readonly IOrderService _orderService;
+        // Siparişi veritabanından almak için gerekli işlemler
+    }
 
-        public OrdersController(IOrderService orderService)
-        {
-            _orderService = orderService;
-        }
+    public List<Order> GetOrders()
+    {
+        // Tüm siparişleri veritabanından almak için gerekli işlemler
+    }
 
-        // OrderController actions
+    public void CreateOrder(Order order)
+    {
+        // Siparişi veritabanına kaydetmek için gerekli işlemler
+    }
+
+    public void UpdateOrder(Order order)
+    {
+        // Siparişi güncellemek için gerekli işlemler
+    }
+
+    public void DeleteOrder(int orderId)
+    {
+        // Siparişi silmek için gerekli işlemler
     }
 }
